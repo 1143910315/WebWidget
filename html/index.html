@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>标题</title>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+		<script src="js/qwebchannel.js"></script>
+		<!-- <script src="https://unpkg.com/vue@next"></script> -->
+		<!-- <script src="js/v3.2.8/vue.global.prod.js" type="text/javascript" charset="utf-8"></script> -->
+
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<div>{{ counter }}</div>
+			<div>{{ message }}</div>
+			<el-row>
+				<el-button v-on:click="api.clickButton('默认按钮')">默认按钮</el-button>
+				<el-button type="primary" v-on:click="api.clickButton('主要按钮')">主要按钮</el-button>
+				<el-button type="success" v-on:click="api.clickButton('成功按钮')">成功按钮</el-button>
+				<el-button type="info" v-on:click="api.clickButton('信息按钮')">信息按钮</el-button>
+				<el-button type="warning" v-on:click="api.clickButton('警告按钮')">警告按钮</el-button>
+				<el-button type="danger" v-on:click="api.clickButton('危险按钮')">危险按钮</el-button>
+			</el-row>
+
+			<el-row>
+				<el-button plain v-on:click="api.clickButton('朴素按钮')">朴素按钮</el-button>
+				<el-button type="primary" plain v-on:click="api.clickButton('主要按钮')">主要按钮</el-button>
+				<el-button type="success" plain v-on:click="api.clickButton('成功按钮')">成功按钮</el-button>
+				<el-button type="info" plain v-on:click="api.clickButton('信息按钮')">信息按钮</el-button>
+				<el-button type="warning" plain v-on:click="api.clickButton('警告按钮')">警告按钮</el-button>
+				<el-button type="danger" plain v-on:click="api.clickButton('危险按钮')">危险按钮</el-button>
+			</el-row>
+
+			<el-row>
+				<el-button round v-on:click="api.clickButton('圆角按钮')">圆角按钮</el-button>
+				<el-button type="primary" round v-on:click="api.clickButton('主要按钮')">主要按钮</el-button>
+				<el-button type="success" round v-on:click="api.clickButton('成功按钮')">成功按钮</el-button>
+				<el-button type="info" round v-on:click="api.clickButton('信息按钮')">信息按钮</el-button>
+				<el-button type="warning" round v-on:click="api.clickButton('警告按钮')">警告按钮</el-button>
+				<el-button type="danger" round v-on:click="api.clickButton('危险按钮')">危险按钮</el-button>
+			</el-row>
+
+			<el-row>
+				<el-button icon="el-icon-search" circle v-on:click="api.clickButton('搜索图标')"></el-button>
+				<el-button type="primary" icon="el-icon-edit" circle v-on:click="api.clickButton('编辑图标')"></el-button>
+				<el-button type="success" icon="el-icon-check" circle v-on:click="api.clickButton('确认图标')"></el-button>
+				<el-button type="info" icon="el-icon-message" circle v-on:click="api.clickButton('邮件图标')"></el-button>
+				<el-button type="warning" icon="el-icon-star-off" circle v-on:click="api.clickButton('星标图标')"></el-button>
+				<el-button type="danger" icon="el-icon-delete" circle v-on:click="api.clickButton('删除图标')"></el-button>
+			</el-row>
+		</div>
+		<!-- 引入vue组件库 -->
+		<script src="js/v2.6.10/vue.min.js"></script>
+		<!-- 引入饿了吗UI组件库 -->
+		<script src="element-ui/lib/index.js"></script>
+		<script>
+			/* const App = {
+				data() {
+					return {
+						counter: 0
+					}
+				}
+			};
+			Vue.createApp(App).mount('#app'); */
+			const App = new Vue({
+				el: '#app',
+				data() {
+					return {
+						counter: 0,
+						message: "==",
+						api: null
+					}
+				}
+			});
+			new QWebChannel(qt.webChannelTransport,
+				function(channel) {
+					App.api = channel.objects.api;
+					App.api.test();
+					App.api.lastContent = "加载完成";
+					App.api.clickButtonMessageChanged.connect(function() {
+						App.message = App.api.clickButtonMessage;
+					});
+				}
+			);
+		</script>
+	</body>
+</html>
