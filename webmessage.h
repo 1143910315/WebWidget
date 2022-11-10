@@ -1,6 +1,7 @@
 #ifndef WEBMESSAGE_H
 #define WEBMESSAGE_H
 
+#include <QJsonObject>
 #include <QObject>
 
 class WebMessage : public QObject {
@@ -20,6 +21,7 @@ private:
 public slots:
     void test();
     void clickButton(QString buttonType);
+    void clickPage(QJsonObject jsonObject);
 signals:
     void lastContentChanged();
     void clickButtonMessageChanged();

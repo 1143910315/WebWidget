@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
 	</head>
 	<body>
-		<div id="app" v-cloak>
+		<div id="app" v-cloak v-on:mouseup="pageOnMouseUp">
 			<div>{{ counter }}</div>
 			<div>{{ message }}</div>
 			<el-row>
@@ -76,7 +76,16 @@
 						message: "==",
 						api: null
 					}
-				}
+				},
+				methods:{
+                pageOnMouseUp(e){
+                    this.api.clickPage({
+						x:e.clientX,
+						y:e.clientY
+					});
+                }
+            }
+
 			});
 			new QWebChannel(qt.webChannelTransport,
 				function(channel) {
